@@ -1,0 +1,38 @@
+#!/bin/bash
+
+echo
+read -p  "Are you sure you are in the root folder of the Godot project you want to create the structure for? (y/n): " userOk
+
+if [ $userOk != 'y' ] && [ $userOk != 'Y' ]; then
+  echo
+  echo "Please move to the appropriate directory and run this script again."
+  echo
+  exit 0
+fi
+
+#make addons directory
+mkdir addons
+echo "Addons directory created"
+
+# make assets directory and sub-directories
+mkdir assets
+cd assets
+mkdir -p audio/sounds_effects audio/music art/sprites art/spritesheets art/textures art/tilesets 
+cd ..
+echo "Assets directory and sub-directories created"
+
+# make scenes directory and sub-directories
+mkdir scenes
+cd scenes
+mkdir characters components effects items levels weapons world_objects
+cd characters
+mkdir enemies bosses npcs
+cd ../..
+echo "Scenes directory and sub-directories created"
+
+# make scripts directory and sub-directories
+mkdir -p scripts/autoloads
+echo "Scripts directory and sub-directories created"
+
+echo "Done creating Godot project directory structure."
+
