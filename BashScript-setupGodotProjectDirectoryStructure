@@ -1,15 +1,11 @@
 #!/bin/bash
 
-not_a_godot_project () {
-  echo
-  echo "Please move to the appropriate directory and run this script again."
-  echo
-  exit 1
-}
-
 validate_project_dir () {
   if [ ! -f project.godot ]; then
-    not_a_godot_project
+    echo
+    echo "Please move to the appropriate directory and run this script again."
+    echo
+    exit 1
   fi
 }
 
