@@ -1,38 +1,52 @@
 #!/bin/bash
 
-echo
-read -p  "Are you sure you are in the root folder of the Godot project you want to create the structure for? (y/n): " userOk
-
-if [ $userOk != 'y' ] && [ $userOk != 'Y' ]; then
+not_a_godot_project () {
   echo
   echo "Please move to the appropriate directory and run this script again."
   echo
-  exit 0
-fi
+  exit 1
+}
 
-#make addons directory
-mkdir addons
-echo "Addons directory created"
+validate_project_dir () {
+  if [ ! -f project.godot ]; then
+    not_a_godot_project
+  fi
+}
 
-# make assets directory and sub-directories
-mkdir assets
-cd assets
-mkdir -p audio/sounds_effects audio/music art/sprites art/spritesheets art/textures art/tilesets 
-cd ..
-echo "Assets directory and sub-directories created"
+create_addons_dirs () {
+  mkdir -p addons
+  echo "Addons directory created"
+}
 
-# make scenes directory and sub-directories
-mkdir scenes
-cd scenes
-mkdir characters components effects items levels weapons world_objects
-cd characters
-mkdir enemies bosses npcs
-cd ../..
-echo "Scenes directory and sub-directories created"
+create_assets_dirs () {
+  # Audio
+  mkdir -p assets/audio/sounds_effects assets/audio/music
+  # Art
+  mkdir -p assets/art/sprites assets/art/spritesheets assets/art/textures assets/art/tilesets
+  echo "Assets directory and sub-directories created"
+}
 
-# make scripts directory and sub-directories
-mkdir -p scripts/autoloads
-echo "Scripts directory and sub-directories created"
+create_scenes_dirs () {
+  # Charactor Scenes
+  mkdir -p scenes/characters/enemies scenes/characters/bosses scenes/characters/npcs
+  # Other Scenes
+  mkdir -p scenes/components scenes/effects scenes/items scenes/levels scenes/weapons scenes/world_objects
+  echo "Scenes directory and sub-directories created"
+}
+
+create_scripts_dirs () {
+  mkdir -p scripts/autoloads
+  echo "Scripts directory and sub-directories created"
+}
+
+## Execution Chain
+echo # Padding from previous terminal executions
+validate_project_dir
+
+# Create Directories
+create_addons_dirs
+create_assets_dirs
+create_scenes_dirs
+create_scripts_dirs
 
 echo "Done creating Godot project directory structure."
-
